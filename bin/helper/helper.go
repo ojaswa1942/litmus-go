@@ -15,6 +15,7 @@ import (
 	diskFill "github.com/litmuschaos/litmus-go/chaoslib/litmus/disk-fill/helper"
 	networkChaos "github.com/litmuschaos/litmus-go/chaoslib/litmus/network-chaos/helper"
 	dnsChaos "github.com/litmuschaos/litmus-go/chaoslib/litmus/pod-dns-chaos/helper"
+	memoryLeak "github.com/litmuschaos/litmus-go/chaoslib/litmus/pod-memory-leak/helper"
 	stressChaos "github.com/litmuschaos/litmus-go/chaoslib/litmus/stress-chaos/helper"
 
 	"github.com/litmuschaos/litmus-go/pkg/clients"
@@ -58,6 +59,8 @@ func main() {
 		stressChaos.Helper(clients)
 	case "network-chaos":
 		networkChaos.Helper(clients)
+	case "memory-leak":
+		memoryLeak.Helper(clients)
 
 	default:
 		log.Errorf("Unsupported -name %v, please provide the correct value of -name args", *helperName)

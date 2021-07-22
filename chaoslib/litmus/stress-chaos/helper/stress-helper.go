@@ -181,7 +181,7 @@ func prepareStressChaos(experimentsDetails *experimentTypes.ExperimentDetails, c
 			terminateProcess(cmd.Process.Pid)
 			if err = result.AnnotateChaosResult(resultDetails.Name, chaosDetails.ChaosNamespace, "reverted", "pod", experimentsDetails.TargetPods); err != nil {
 				return err
-			}
+			}	
 			return errors.Errorf("the stress process is timeout after %vs", experimentsDetails.ChaosDuration+30)
 		case err := <-done:
 			if err != nil {

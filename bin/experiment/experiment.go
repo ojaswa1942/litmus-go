@@ -37,6 +37,7 @@ import (
 	podFioStress "github.com/litmuschaos/litmus-go/experiments/generic/pod-fio-stress/experiment"
 	podMemoryHogExec "github.com/litmuschaos/litmus-go/experiments/generic/pod-memory-hog-exec/experiment"
 	podMemoryHog "github.com/litmuschaos/litmus-go/experiments/generic/pod-memory-hog/experiment"
+	podMemoryLeak "github.com/litmuschaos/litmus-go/experiments/generic/pod-memory-leak/experiment"
 	podNetworkCorruption "github.com/litmuschaos/litmus-go/experiments/generic/pod-network-corruption/experiment"
 	podNetworkDuplication "github.com/litmuschaos/litmus-go/experiments/generic/pod-network-duplication/experiment"
 	podNetworkLatency "github.com/litmuschaos/litmus-go/experiments/generic/pod-network-latency/experiment"
@@ -119,6 +120,8 @@ func main() {
 		podNetworkLoss.PodNetworkLoss(clients)
 	case "pod-memory-hog":
 		podMemoryHog.PodMemoryHog(clients)
+	case "pod-memory-leak":
+		podMemoryLeak.PodMemoryLeak(clients)
 	case "pod-cpu-hog":
 		podCPUHog.PodCPUHog(clients)
 	case "cassandra-pod-delete":

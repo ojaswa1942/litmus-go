@@ -1,0 +1,5 @@
+packageName: generic
+experiments:
+  - name: pod-memory-leak
+    CSV: pod-memory-leak.chartserviceversion.yaml
+    desc: "pod-memory-leak"

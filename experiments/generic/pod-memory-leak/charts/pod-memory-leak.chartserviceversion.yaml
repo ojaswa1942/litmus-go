@@ -1,0 +1,37 @@
+apiVersion: litmuchaos.io/v1alpha1
+kind: ChartServiceVersion
+metadata:
+  name: pod-memory-leak 
+  version: 0.1.0
+  annotations:
+    categories: generic
+spec:
+  displayName: pod-memory-leak 
+  categoryDescription: >
+    it execs inside target pods to run the chaos inject commands, waits for the chaos duration and reverts the chaos 
+  keywords: 
+    - "pods" 
+    - "kubernetes" 
+    - "memory-leak" 
+    - "memory" 
+    - "exec"
+  platforms: 
+    - "Minikube" 
+    - "OpenShift"
+  maturity: alpha
+  maintainers: 
+    - name: Ojaswa Sharma 
+      email: ojaswa.sharma@ibm.com 
+  minKubeVersion: 1.12.0 
+  provider: 
+    name: 
+  labels:
+    app.kubernetes.io/component: chartserviceversion
+    app.kubernetes.io/version: latest
+  links: 
+    - name: Documentation 
+      url: https://docs.litmuschaos.io/docs/getstarted/ 
+  icon:
+    - url: 
+      mediatype: ""
+  chaosexpcrdlink: https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/generic/pod-memory-leak/experiment.yaml

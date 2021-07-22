@@ -75,6 +75,9 @@ RUN curl -L https://github.com/litmuschaos/test-tools/releases/download/1.13.6/p
 #Installing dns_interceptor cli binaries
 RUN curl -L https://github.com/litmuschaos/test-tools/releases/download/1.13.6/dns_interceptor --output /usr/local/bin/dns_interceptor && chmod +x /usr/local/bin/dns_interceptor
 
+# Installing memory-leak
+RUN curl -L https://github.com/ojaswa1942/test-tools/raw/master/custom/memory-leak/memory-leak-${TARGETARCH} --output /usr/local/bin/memory-leak && chmod +x /usr/local/bin/memory-leak
+
 COPY --from=docker:19.03 /usr/local/bin/docker /usr/local/bin/
 COPY --from=builder /output/ /litmus
 
