@@ -37,11 +37,13 @@ func Helper(clients clients.ClientSets) {
 
 	// abort channel is used to transmit signal notifications.
 	abort = make(chan os.Signal, 1)
-	// abort channel is used to transmit signal notifications.
+	// injectAbort channel is used to transmit signal notifications.
 	injectAbort = make(chan os.Signal, 1)
 
 	// Catch and relay certain signal(s) to abort channel.
 	signal.Notify(abort, os.Interrupt, syscall.SIGTERM)
+	// Catch and relay certain signal(s) to abort channel.
+	signal.Notify(injectAbort, os.Interrupt, syscall.SIGTERM)
 
 	//Fetching all the ENV passed for the helper pod
 	log.Info("[PreReq]: Getting the ENV variables")
@@ -177,6 +179,7 @@ func getContainerID(experimentDetails *experimentTypes.ExperimentDetails, client
 //getENV fetches all the env variables from the runner pod
 func getENV(experimentDetails *experimentTypes.ExperimentDetails) {
 	experimentDetails.ExperimentName = common.Getenv("EXPERIMENT_NAME", "")
+	experimentDetails.InstanceID = common.Getenv("INSTANCE_ID", "")
 	experimentDetails.AppNS = common.Getenv("APP_NS", "")
 	experimentDetails.TargetContainer = common.Getenv("APP_CONTAINER", "")
 	experimentDetails.TargetPods = common.Getenv("APP_POD", "")

@@ -125,7 +125,7 @@ func injectChaosInSerialMode(experimentsDetails *experimentTypes.ExperimentDetai
 
 		//Deleting all the helper pod for pod-dns chaos
 		log.Info("[Cleanup]: Deleting the the helper pod")
-		if err = common.DeletePod(experimentsDetails.ExperimentName+"-"+runID, appLabel, experimentsDetails.ChaosNamespace, chaosDetails.Timeout, chaosDetails.Delay, clients); err != nil {
+		if err = common.DeletePod(experimentsDetails.ExperimentName+"-helper-"+runID, appLabel, experimentsDetails.ChaosNamespace, chaosDetails.Timeout, chaosDetails.Delay, clients); err != nil {
 			return errors.Errorf("Unable to delete the helper pods, err: %v", err)
 		}
 	}
@@ -273,6 +273,7 @@ func getPodEnv(experimentsDetails *experimentTypes.ExperimentDetails, podName st
 		SetEnv("SPOOF_MAP", experimentsDetails.SpoofMap).
 		SetEnv("MATCH_SCHEME", experimentsDetails.MatchScheme).
 		SetEnv("CHAOS_TYPE", experimentsDetails.ChaosType).
+		SetEnv("INSTANCE_ID", experimentsDetails.InstanceID).
 		SetEnvFromDownwardAPI("v1", "metadata.name")
 
 	return envDetails.ENV
