@@ -22,22 +22,10 @@ import (
 	clientTypes "k8s.io/apimachinery/pkg/types"
 )
 
-//list of cgroups in a container
-// var (
-// 	cgroupSubsystemList = []string{"cpu", "memory", "systemd", "net_cls",
-// 		"net_prio", "freezer", "blkio", "perf_event", "devices", "cpuset",
-// 		"cpuacct", "pids", "hugetlb",
-// 	}
-// )
-
 var (
 	err                error
 	abort, injectAbort chan os.Signal
 )
-
-// const (
-// 	ProcessAlreadyFinished = "os: process already finished"
-// )
 
 // Helper injects the dns chaos
 func Helper(clients clients.ClientSets) {
@@ -106,7 +94,8 @@ func preparePodMemoryLeak(experimentsDetails *experimentTypes.ExperimentDetails,
 	}
 
 	// prepare memory-leak
-	stressCommand := "pause nsutil -t " + strconv.Itoa(pid) + " -p -- " + prepareStressor(experimentsDetails)
+	// stressCommand := "pause nsutil -t " + strconv.Itoa(pid) + " -p -- " + prepareStressor(experimentsDetails)
+	stressCommand := "sudo nsutil -t " + strconv.Itoa(pid) + " -p -- " + prepareStressor(experimentsDetails)
 	cmd := exec.Command("/bin/bash", "-c", stressCommand)
 	log.Info(cmd.String())
 	cmd.Stdout = os.Stdout
@@ -129,7 +118,8 @@ func preparePodMemoryLeak(experimentsDetails *experimentTypes.ExperimentDetails,
 		return err
 	}
 
-	timeChan := time.Tick(time.Duration(experimentsDetails.ChaosDuration) * time.Second)
+	// additional 10s for custom leak process to gracefully terminate (similar to IO stressors)
+	timeChan := time.Tick(time.Duration(experimentsDetails.ChaosDuration+10) * time.Second)
 	log.Infof("[Chaos]: Waiting for %vs", experimentsDetails.ChaosDuration)
 
 	// either wait for abort signal or chaos duration
